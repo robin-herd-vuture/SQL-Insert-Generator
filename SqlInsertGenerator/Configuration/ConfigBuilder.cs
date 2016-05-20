@@ -15,7 +15,7 @@ namespace SqlInsertGenerator.Configuration
 
             ConsoleHelper.WriteSeparator("Column headings. Enter '#' for any columns that should be ignored.");
 
-            var values = firstLine.Split(',');
+            var values = firstLine.Split(Constants.Separator);
             for (var i = 0; i < values.Length; i++)
             {
                 var headingName = ConsoleHelper.InputValue(string.Format("Column {0} heading (example value '{1}')", i, values[i]));

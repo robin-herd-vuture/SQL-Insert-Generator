@@ -11,7 +11,7 @@ namespace SqlInsertGenerator
         {
             ConsoleHelper.WriteSeparator("Welcome to the SQL INSERT generator.");
 
-            var path = ConsoleHelper.InputValue("CSV file name");
+            var path = ConsoleHelper.InputValue("Tab-delimited file name");
             var db = ConsoleHelper.InputValue("Database name");
             var table = ConsoleHelper.InputValue("Table name");
             
@@ -22,12 +22,13 @@ namespace SqlInsertGenerator
             var statements = GetAllStatements(config, lines);
         }
 
-        static IEnumerable<string> GetAllStatements(Config config, IEnumerable<string> lines)
+        static IList<string> GetAllStatements(Config config, IEnumerable<string> lines)
         {
+            var statements = new List<string>();
             var insertStatement = GetInsertStatement(config);
             foreach (var line in lines)
             {
-                var values = line.Split(',');
+                var values = line.Split(Constants.Separator);
                 var formattedValues = new List<string>();
                 for (var i = 0; i < values.Length; i++)
                 {
@@ -41,8 +42,10 @@ namespace SqlInsertGenerator
 
                 var valueStatement = string.Format("({0})", string.Join(", ", formattedValues));
                 var fullStatement = insertStatement + valueStatement;
-                yield return fullStatement;
+                statements.Add(fullStatement);
             }
+
+            return statements;
         }
 
         static string FormatValue(string value)
