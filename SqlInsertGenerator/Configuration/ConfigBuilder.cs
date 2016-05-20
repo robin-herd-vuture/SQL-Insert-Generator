@@ -23,6 +23,8 @@ namespace SqlInsertGenerator.Configuration
                     ? new ColumnHeading { Ignore = true }
                     : new ColumnHeading { Name = headingName });
             }
+
+            return config;
         }
     }
 }
