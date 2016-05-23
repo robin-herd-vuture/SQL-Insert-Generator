@@ -37,9 +37,9 @@ Table name: CustomFields
 Column headings. Enter '#' for any columns that should be ignored.
 ******************************************************************
 
-Column 0 heading (example value '1799350'): #
+Column 0 heading (example value '1625'): #
 Column 1 heading (example value 'FullName'): FieldName
-Column 2 heading (example value 'Edy H'): FieldValue
+Column 2 heading (example value 'Robin Herd'): FieldValue
 ```
 
 ## Example output
