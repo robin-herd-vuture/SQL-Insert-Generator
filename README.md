@@ -20,7 +20,7 @@ Convert tab-delimited data into SQL INSERT statements
 1627	Role	Software Developer
 ```
 
-## Example usage:
+## Example usage
 ```
 C:\Users\robin.herd\Desktop\Repos\SqlInsertGenerator\SqlInsertGenerator\bin\Debu
 g>SqlInsertGenerator
