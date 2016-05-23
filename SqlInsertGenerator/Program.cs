@@ -20,12 +20,14 @@ namespace SqlInsertGenerator
             var config = new ConfigBuilder().Build(first, table, db);
 
             var statements = GetAllStatements(config, lines);
+
+            File.WriteAllLines("output.sql", statements);
         }
 
-        static IList<string> GetAllStatements(Config config, IEnumerable<string> lines)
+        static IEnumerable<string> GetAllStatements(Config config, IEnumerable<string> lines)
         {
-            var statements = new List<string>();
             var insertStatement = GetInsertStatement(config);
+            var goCounter = 0;
             foreach (var line in lines)
             {
                 var values = line.Split(Constants.Separator);
@@ -42,14 +44,25 @@ namespace SqlInsertGenerator
 
                 var valueStatement = string.Format("({0})", string.Join(", ", formattedValues));
                 var fullStatement = insertStatement + valueStatement;
-                statements.Add(fullStatement);
-            }
+                yield return fullStatement;
 
-            return statements;
+                // prevents the following error: There is insufficient system memory in resource pool 'internal' to run this query.
+                goCounter++;
+                if (goCounter > 100)
+                {
+                    yield return "GO";
+                    goCounter = 0;
+                }
+            }
         }
 
         static string FormatValue(string value)
         {
+            if (value == "NULL")
+            {
+                return "NULL";
+            }
+
             var replaced = value.Replace("'", "''");
             return string.Format("'{0}'", replaced);
         }
